@@ -55,7 +55,7 @@ export const MainStyled = styled.main`
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         a {
           text-decoration: none;
-          color: var(--color-blue-700);
+          color: var(--color-brand-1);
           cursor: pointer;
         }
         a:hover {
@@ -131,7 +131,7 @@ export const EyeIcon = styled.span`
 
 export const FormButtonStyled = styled.button`
   width: 100%;
-  background-color: var(--color-blue-900);
+  background-color: var(--color-brand-1);
   border-radius: 0.8rem;
   height: 6.9rem;
   font-size: 1.6rem;

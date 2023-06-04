@@ -53,7 +53,7 @@ export const MainStyled = styled.main`
         align-items: center;
         a {
           text-decoration: none;
-          color: var(--color-blue-700);
+          color: var(--color-brand-2);
           cursor: pointer;
         }
         a:hover {
@@ -137,7 +137,7 @@ export const EyeIcon = styled.span`
 
 export const FormButtonStyled = styled.button`
   width: 100%;
-  background-color: var(--color-blue-900);
+  background-color: var(--color-brand-1);
   border-radius: 0.8rem;
   height: 5rem;
   font-size: 16px;

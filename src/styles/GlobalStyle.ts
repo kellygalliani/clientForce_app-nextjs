@@ -2,24 +2,17 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
    :root {
-    --color-blue-900: #026AA7 ;
-    --color-blue-800: #0077C3;
-    --color-blue-700: #1976d2;
-    --color-blue-600: #1e88e5;
-    --color-blue-500: #2196f3;
-    --color-blue-400: #42a5f5;
-    --color-blue-300: #64b5f6;
-    --color-blue-200: #90caf9;
-    --color-blue-100: #bbdefb;
+    --color-brand-1: #FD3F6C ;
+    --color-brand-2: #7A4CFC;
     --color-gray-900: #212121;
     --color-gray-800: #424242;
     --color-gray-700: #616161;
     --color-gray-600: #757575;
     --color-gray-500: #9e9e9e;
     --color-gray-400: #bdbdbd;
-    --color-gray-300: #e0e0e0;
-    --color-gray-200: #eeeeee;
-    --color-gray-100: #f5f5f5;
+    --color-gray-300: #E9E9E9;
+    --color-gray-200: #F6F6F6;
+    --color-gray-100: #fff;
 
     font-size: 60%; 
   }
@@ -44,7 +37,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background: var(--color-blue-900);
+    background: var(--color-gray-100);
     color: var(--color-gray-800);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;

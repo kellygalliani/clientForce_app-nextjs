@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import {
   HeaderStyled,
   MenuDropDown,
@@ -6,7 +7,37 @@ import {
 } from "./styles";
 import { RiContactsFill } from "react-icons/ri";
 import Avatar from "../../assets/tasks.png";
+
 export const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const avatarRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLParagraphElement>(null);
+
+  const handleMenuDropDown = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target as Node) &&
+      avatarRef.current &&
+      !avatarRef.current.contains(event.target as Node) &&
+      nameRef.current &&
+      !nameRef.current.contains(event.target as Node)
+    ) {
+      setMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <HeaderStyled>
@@ -17,14 +48,18 @@ export const Header = () => {
               <p>ClientForce</p>
             </div>
             <UserInforStyled>
-              <p>Natalya</p>
-              <UserAvatar>
+              <p ref={nameRef} onClick={handleMenuDropDown}>
+                Natalya
+              </p>
+              <UserAvatar ref={avatarRef} onClick={handleMenuDropDown}>
                 <img src={Avatar} alt="" />
               </UserAvatar>
-              <MenuDropDown>
-                <a href="">Editar Perfil</a>
-                <a href="">Logout</a>
-              </MenuDropDown>
+              {menuOpen && (
+                <MenuDropDown ref={menuRef}>
+                  <a href="">Editar Perfil</a>
+                  <a href="">Logout</a>
+                </MenuDropDown>
+              )}
             </UserInforStyled>
           </div>
         </div>
