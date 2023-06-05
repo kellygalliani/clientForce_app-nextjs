@@ -4,6 +4,7 @@ import { AuthContextValues, User, iAuthProviderProps } from "./interfaces";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { RegisterData } from "../pages/Register/schema";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext<AuthContextValues>(
   {} as AuthContextValues
@@ -27,9 +28,14 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
 
   const signIn = async (data: LoginData) => {
     try {
-      const response = await api.post("/login", data);
+      const responsePromise = api.post("/login", data);
+      toast.promise(responsePromise, {
+        pending: "Fazendo o login...",
+        success: "Login realizado com sucesso 👌",
+        error: "Não foi possível logar, verifique seus dados 🤯",
+      });
+      const response = await responsePromise;
       const { token } = response.data;
-
       api.defaults.headers.common.authorization = `Bearer ${token}`;
       localStorage.setItem("clientForce:token", token);
 
@@ -41,7 +47,13 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
 
   const signUp = async (data: RegisterData) => {
     try {
-      await api.post("/users", data);
+      const responsePromise = api.post("/users", data);
+      toast.promise(responsePromise, {
+        pending: "Registrando...",
+        success: "Registro realizado com sucesso 👌",
+        error: "Não foi possível registrar, tente novamente 🤯",
+      });
+      await responsePromise;
 
       navigate("");
     } catch (error) {

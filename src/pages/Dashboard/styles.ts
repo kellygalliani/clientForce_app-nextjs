@@ -18,7 +18,7 @@ export const MainStyled = styled.main`
     max-width: 1080px;
     margin: 25px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
   }
   > a {

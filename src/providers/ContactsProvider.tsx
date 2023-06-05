@@ -6,14 +6,12 @@ import {
 } from "./interfaces";
 import { api } from "../services/api";
 import { ContactData } from "../components/Modal/ModalCreate/schema";
-
+import { toast } from "react-toastify";
 export const ContactsContext = createContext<ContactsContextValues>(
   {} as ContactsContextValues
 );
 
 export const ContactsProvider = ({ children }: iContactsProviderProps) => {
-  /* const navigate = useNavigate(); */
-
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -50,11 +48,26 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
   const create = async (data: ContactData) => {
     try {
       if (data.email && data.name && data.phone) {
-        const response = await api.post("/contacts", data);
+        const responsePromise = api.post("/contacts", data);
+        toast.promise(responsePromise, {
+          pending: "Criando contato...",
+          success: "Contato criado com sucesso 👌",
+          error: "Não foi possível criar o contato, tente novamente 🤯",
+        });
+        const response = await responsePromise;
         setContacts((prevContacts) => [response.data, ...prevContacts]);
         handleCloseModal();
       } else if (data.email || data.phone) {
-        await api.patch(`/contacts/${currentContact?.id}`, data);
+        const responsePromise = api.patch(
+          `/contacts/${currentContact?.id}`,
+          data
+        );
+        toast.promise(responsePromise, {
+          pending: "Atualizando contato...",
+          success: "Contato atualizado com sucesso 👌",
+          error: "Não foi possível atualizar o contato, tente novamente 🤯",
+        });
+        await responsePromise;
 
         setCurrentContact((prevCurrentContact) => {
           if (!prevCurrentContact) return undefined;
@@ -83,12 +96,21 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
 
   const edit = async (data: ContactData, idItem: string) => {
     try {
+      let responsePromise;
       if (data.name) {
-        await api.patch(`/contacts/${idItem}`, data);
+        responsePromise = api.patch(`/contacts/${idItem}`, data);
       } else if (data.email) {
-        await api.patch(`/contacts/email/${idItem}`, data);
+        responsePromise = api.patch(`/contacts/email/${idItem}`, data);
       } else if (data.phone) {
-        await api.patch(`/contacts/phone/${idItem}`, data);
+        responsePromise = api.patch(`/contacts/phone/${idItem}`, data);
+      }
+      if (responsePromise) {
+        toast.promise(responsePromise, {
+          pending: "Editando contato...",
+          success: "Contato editado com sucesso 👌",
+          error: "Não foi possível editar o contato, tente novamente 🤯",
+        });
+        await responsePromise;
       }
       getContacts();
       handleOpenModal("seeMore");
@@ -115,6 +137,31 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
     }
   };
 
+  const deleteItem = async (idItem: string, type: string) => {
+    try {
+      let responsePromise;
+      if (type === "contact") {
+        responsePromise = api.delete(`/contacts/${idItem}`);
+      } else if (type === "email") {
+        responsePromise = api.delete(`/contacts/email/${idItem}`);
+      } else if (type === "phone") {
+        responsePromise = api.delete(`/contacts/phone/${idItem}`);
+      }
+      if (responsePromise) {
+        toast.promise(responsePromise, {
+          pending: "Deletando...",
+          success: "Deletado com sucesso 👌",
+          error: "Não foi possível deletar, tente novamente 🤯",
+        });
+        await responsePromise;
+      }
+      getContacts();
+      handleCloseModal();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <ContactsContext.Provider
       value={{
@@ -130,6 +177,7 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
         edit,
         currentItem,
         setCurrentItem,
+        deleteItem,
       }}
     >
       {children}

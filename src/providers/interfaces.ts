@@ -32,6 +32,7 @@ export interface ContactsContextValues {
   setCurrentContact: React.Dispatch<React.SetStateAction<Contact | undefined>>;
   currentItem: string;
   setCurrentItem: React.Dispatch<React.SetStateAction<string>>;
+  deleteItem: (idItem: string, type: string) => void;
 }
 
 interface Email {

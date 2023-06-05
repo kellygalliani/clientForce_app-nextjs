@@ -11,7 +11,7 @@ export const ModalSeeMore = () => {
     handleCloseModal,
     handleOpenModal,
     currentContact,
-
+    deleteItem,
     setCurrentItem,
   } = useContacts();
 
@@ -107,6 +107,7 @@ export const ModalSeeMore = () => {
                 <ButtonModalSeeMore>
                   <SmallButtonBrand
                     onClick={() => {
+                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                       setCurrentItem(phone!.id);
                       handleOpenModal("editPhone");
                     }}
@@ -116,6 +117,7 @@ export const ModalSeeMore = () => {
 
                   <SmallButtonBrand
                     onClick={() => {
+                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                       setCurrentItem(phone!.id);
                       handleOpenModal("deletePhone");
                     }}

@@ -1,6 +1,7 @@
 import { MainRoutes } from "./routes";
 import { AuthProvider } from "./providers/AuthProvider.tsx";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function App() {
   return (

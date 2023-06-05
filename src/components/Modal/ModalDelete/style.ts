@@ -21,7 +21,7 @@ export const ModalContent = styled.div`
     height: 25px;
     cursor: pointer;
   }
-  form {
+  main {
     width: 100%;
     display: flex;
     flex-direction: column;
