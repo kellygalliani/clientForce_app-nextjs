@@ -13,8 +13,8 @@ import { ModalEdit } from "../../components/Modal/ModalEdit";
 import { ModalDelete } from "../../components/Modal/ModalDelete";
 
 export const Dashboard = () => {
-  const { modalOpen, modalType, handleOpenModal, contacts } = useContacts();
-  const { user, setUser } = useAuth();
+  const { modalOpen, modalType, handleOpenModal } = useContacts();
+  const { setUser } = useAuth();
 
   useEffect(() => {
     (async () => {

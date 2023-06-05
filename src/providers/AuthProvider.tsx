@@ -4,7 +4,6 @@ import { AuthContextValues, User, iAuthProviderProps } from "./interfaces";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { RegisterData } from "../pages/Register/schema";
-import { toast } from "react-toastify";
 
 export const AuthContext = createContext<AuthContextValues>(
   {} as AuthContextValues
@@ -42,7 +41,7 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
 
   const signUp = async (data: RegisterData) => {
     try {
-      const response = await api.post("/users", data);
+      await api.post("/users", data);
 
       navigate("");
     } catch (error) {

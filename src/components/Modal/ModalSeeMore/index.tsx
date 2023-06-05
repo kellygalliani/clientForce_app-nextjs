@@ -11,7 +11,7 @@ export const ModalSeeMore = () => {
     handleCloseModal,
     handleOpenModal,
     currentContact,
-    currentItem,
+
     setCurrentItem,
   } = useContacts();
 

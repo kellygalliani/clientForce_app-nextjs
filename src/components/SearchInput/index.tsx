@@ -1,7 +1,6 @@
 import { InputStyled } from "./styles";
 import { BiSearch } from "react-icons/bi";
 import { HiOutlineMail, HiPhone, HiUser } from "react-icons/hi";
-import { useContacts } from "../../hooks/useAuth";
 import { useSearchValue } from "../../providers/SearchValueContext";
 
 export const SearchInput = () => {

@@ -6,8 +6,8 @@ interface iSearchContextProps {
 
 const SearchValueContext = createContext({
   searchValue: "",
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setSearchValue: (value: string) => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
+  setSearchValue: (_value: string) => {},
 });
 
 export const SearchValueProvider = ({ children }: iSearchContextProps) => {

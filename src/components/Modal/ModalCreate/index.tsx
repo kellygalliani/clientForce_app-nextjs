@@ -31,11 +31,7 @@ export const ModalCreateContacts = ({ contentCreate }: iModalCreate) => {
   type FormData = ContactData | EmailData | PhoneData;
   const { handleCloseModal, create, handleOpenModal, currentContact } =
     useContacts();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
+  const { register, handleSubmit } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 

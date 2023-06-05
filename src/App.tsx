@@ -1,5 +1,4 @@
 import { MainRoutes } from "./routes";
-import GlobalStyle from "./styles/GlobalStyle.ts";
 import { AuthProvider } from "./providers/AuthProvider.tsx";
 import { ToastContainer } from "react-toastify";
 

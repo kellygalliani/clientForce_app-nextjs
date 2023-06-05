@@ -8,7 +8,7 @@ interface iModal {
   maxwidth: number;
   title: string;
 }
-export const Modal = ({ children, maxwidth, title }: iModal) => {
+export const Modal = ({ children, maxwidth }: iModal) => {
   const { handleCloseModal, handleOpenModal } = useContacts();
   const ref = useRef<HTMLDivElement>(null);
 

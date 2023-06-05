@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { LoginData, schema } from "./schema";
 import { useAuth } from "../../hooks/useAuth";
 import { EyeIcon, FormButtonStyled, FormInputDiv, MainStyled } from "./styles";
-import brand from "../../assets/brand.png";
-import { MdAccountCircle, MdEmail } from "react-icons/md";
+
+import { MdEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { useState } from "react";

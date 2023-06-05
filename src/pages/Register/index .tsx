@@ -2,8 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { RegisterData, registerSchema } from "./schema";
 import { useAuth } from "../../hooks/useAuth";
-import { EyeIcon, FormButtonStyled, FormInputDiv, MainStyled } from "./styles";
-import brand from "../../assets/brand.png";
+import { FormButtonStyled, FormInputDiv, MainStyled } from "./styles";
 import { MdAccountCircle, MdEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
 import { useState } from "react";
@@ -11,7 +10,8 @@ import { Link } from "react-router-dom";
 import { RiContactsFill } from "react-icons/ri";
 
 export const Register = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [showPassword, _setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,

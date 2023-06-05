@@ -5,7 +5,6 @@ import {
   iContactsProviderProps,
 } from "./interfaces";
 import { api } from "../services/api";
-import { useNavigate } from "react-router-dom";
 import { ContactData } from "../components/Modal/ModalCreate/schema";
 
 export const ContactsContext = createContext<ContactsContextValues>(
@@ -13,7 +12,7 @@ export const ContactsContext = createContext<ContactsContextValues>(
 );
 
 export const ContactsProvider = ({ children }: iContactsProviderProps) => {
-  const navigate = useNavigate();
+  /* const navigate = useNavigate(); */
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");

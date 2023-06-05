@@ -13,7 +13,7 @@
 
 ## 1. Sobre
 
-Projeto desenvolvido para o sexto módulo do curso de desenvolvimento fullStack na Kenzie Academy 
+Projeto desenvolvido para o sexto módulo do curso de desenvolvimento fullStack na Kenzie Academy
 
 Uma aplicação que permite logar e gerenciar todos seus contatos.
 
@@ -31,8 +31,7 @@ Uma aplicação que permite logar e gerenciar todos seus contatos.
 
 ## 3. Projeto Live
 
-
-<a name="doc" href="https://clientforce-api-nestjs.onrender.com/api" target="_blank">Ver Site</a>
+<a name="doc" href="https://clientforce-kellygalliani.vercel.app/" target="_blank">Ver Site</a>
 
 <a name="install"></a>
 
@@ -46,7 +45,7 @@ cd clientForce_app-nextjs.git
 <br>
 npm install
 <br>
-npm run start:dev
+npm run dev
 <br>
 optional: include .env in your .gitignore
 
@@ -63,4 +62,3 @@ Este é um projeto Open Source para fins educacionais e não comerciais, **Tipo 
 ## License
 
 Nest is [MIT licensed](LICENSE).
-
