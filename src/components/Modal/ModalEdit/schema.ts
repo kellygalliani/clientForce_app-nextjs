@@ -1,12 +1,9 @@
 import { z } from "zod";
 
-export const contactSchema = z.object({
-  name: z.string().nonempty("Digite um nome"),
-  email: z
-    .string()
-    .email("Digite um e-mail válido")
-    .nonempty("Digite um e-mail válido"),
-  phone: z.string().nonempty("Digite telefone válido"),
+export const editSchema = z.object({
+  name: z.string().optional(),
+  email: z.string().email("Digite um e-mail válido").optional(),
+  phone: z.string().optional(),
 });
 
-export type ContactData = z.infer<typeof contactSchema>;
+export type EditData = z.infer<typeof editSchema>;

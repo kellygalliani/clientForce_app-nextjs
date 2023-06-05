@@ -10,3 +10,18 @@ export const contactSchema = z.object({
 });
 
 export type ContactData = z.infer<typeof contactSchema>;
+
+export const emailSchema = z.object({
+  email: z
+    .string()
+    .email("Digite um e-mail válido")
+    .nonempty("Digite um e-mail válido"),
+});
+
+export type EmailData = z.infer<typeof emailSchema>;
+
+export const phoneSchema = z.object({
+  phone: z.string().nonempty("Digite telefone válido"),
+});
+
+export type PhoneData = z.infer<typeof phoneSchema>;

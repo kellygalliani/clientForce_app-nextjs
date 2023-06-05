@@ -7,7 +7,18 @@ import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import { BsPlusCircleFill } from "react-icons/bs";
 
 export const ModalSeeMore = () => {
-  const { handleCloseModal, createContact, handleOpenModal } = useContacts();
+  const {
+    handleCloseModal,
+    handleOpenModal,
+    currentContact,
+    currentItem,
+    setCurrentItem,
+  } = useContacts();
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
 
   return (
     <Modal maxwidth={900} title="Criar Contato">
@@ -19,23 +30,31 @@ export const ModalSeeMore = () => {
         <div className="modalContent--header">
           <div className="modalContent--header-informations">
             <p>Nome do Contato:</p>
-            <h2>Nome Completo do Cliente</h2>
+            <h2>{currentContact?.name}</h2>
           </div>
           <div className="modalContent--header-informations">
             <p>Criado em:</p>
-            <span>25/07/20023</span>
+            <span>
+              {currentContact && formatDate(currentContact?.createdAt)}
+            </span>
           </div>
 
           <ButtonModalSeeMore>
             <SmallButtonBrand>
               <HiOutlinePencilAlt
-                onClick={() => handleOpenModal("editContact")}
+                onClick={() => {
+                  setCurrentItem(currentContact!.id);
+                  handleOpenModal("editContact");
+                }}
               />
             </SmallButtonBrand>
 
             <SmallButtonBrand>
               <HiOutlineTrash
-                onClick={() => handleOpenModal("deleteContact")}
+                onClick={() => {
+                  setCurrentItem(currentContact!.id);
+                  handleOpenModal("deleteContact");
+                }}
               />
             </SmallButtonBrand>
           </ButtonModalSeeMore>
@@ -46,23 +65,33 @@ export const ModalSeeMore = () => {
           <BsPlusCircleFill onClick={() => handleOpenModal("createEmail")} />
         </div>
         <ListModal>
-          <li>
-            <p>EMAIL - Opção número {1}:</p>
-            <h2>Nome Completo do Cliente</h2>
-            <div>
-              <ButtonModalSeeMore>
-                <SmallButtonBrand onClick={() => handleOpenModal("editEmail")}>
-                  <HiOutlinePencilAlt />
-                </SmallButtonBrand>
+          {currentContact?.emails.map((email, index) => (
+            <li key={index}>
+              <p>EMAIL - Opção número {index + 1}:</p>
+              <h2>{email.email}</h2>
+              <div>
+                <ButtonModalSeeMore>
+                  <SmallButtonBrand
+                    onClick={() => {
+                      setCurrentItem(email!.id);
+                      handleOpenModal("editEmail");
+                    }}
+                  >
+                    <HiOutlinePencilAlt />
+                  </SmallButtonBrand>
 
-                <SmallButtonBrand>
-                  <HiOutlineTrash
-                    onClick={() => handleOpenModal("deleteEmail")}
-                  />
-                </SmallButtonBrand>
-              </ButtonModalSeeMore>
-            </div>
-          </li>
+                  <SmallButtonBrand>
+                    <HiOutlineTrash
+                      onClick={() => {
+                        setCurrentItem(email!.id);
+                        handleOpenModal("deleteEmail");
+                      }}
+                    />
+                  </SmallButtonBrand>
+                </ButtonModalSeeMore>
+              </div>
+            </li>
+          ))}
         </ListModal>
         <div className="divisionModal" />
         <div className="addButton">
@@ -70,25 +99,33 @@ export const ModalSeeMore = () => {
           <BsPlusCircleFill onClick={() => handleOpenModal("createPhone")} />
         </div>
         <ListModal>
-          <li>
-            <p>PHONE - Opção número {1}:</p>
-            <h2>Nome Completo do Cliente</h2>
-            <div>
-              <ButtonModalSeeMore>
-                <SmallButtonBrand>
-                  <HiOutlinePencilAlt
-                    onClick={() => handleOpenModal("editPhone")}
-                  />
-                </SmallButtonBrand>
+          {currentContact?.phones.map((phone, index) => (
+            <li key={index}>
+              <p>PHONE - Opção número {index + 1}:</p>
+              <h2>{phone.phone}</h2>
+              <div>
+                <ButtonModalSeeMore>
+                  <SmallButtonBrand
+                    onClick={() => {
+                      setCurrentItem(phone!.id);
+                      handleOpenModal("editPhone");
+                    }}
+                  >
+                    <HiOutlinePencilAlt />
+                  </SmallButtonBrand>
 
-                <SmallButtonBrand>
-                  <HiOutlineTrash
-                    onClick={() => handleOpenModal("deletePhone")}
-                  />
-                </SmallButtonBrand>
-              </ButtonModalSeeMore>
-            </div>
-          </li>
+                  <SmallButtonBrand
+                    onClick={() => {
+                      setCurrentItem(phone!.id);
+                      handleOpenModal("deletePhone");
+                    }}
+                  >
+                    <HiOutlineTrash />
+                  </SmallButtonBrand>
+                </ButtonModalSeeMore>
+              </div>
+            </li>
+          ))}
         </ListModal>
       </ModalContent>
     </Modal>

@@ -24,9 +24,14 @@ export interface ContactsContextValues {
   handleOpenModal: (type: string) => void;
   modalOpen: boolean;
   modalType: string;
-  createContact: (data: any) => void;
-  contacts: never[];
-  setContacts: React.Dispatch<React.SetStateAction<never[]>>;
+  create: (data: any) => void;
+  edit: (data: any, idItem: string) => void;
+  contacts: Contact[];
+  setContacts: React.Dispatch<React.SetStateAction<Contact[]>>;
+  currentContact: Contact | undefined;
+  setCurrentContact: React.Dispatch<React.SetStateAction<Contact | undefined>>;
+  currentItem: string;
+  setCurrentItem: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface Email {
@@ -50,4 +55,17 @@ export interface User {
   isAdmin: boolean;
   name: string;
   phone: Phone[];
+}
+
+interface UserContact {
+  user_id: string;
+}
+
+export interface Contact {
+  UserContact: UserContact[];
+  createdAt: string;
+  emails: Email[];
+  id: string;
+  name: string;
+  phones: Phone[];
 }

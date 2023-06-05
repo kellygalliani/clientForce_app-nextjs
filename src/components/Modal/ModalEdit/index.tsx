@@ -7,20 +7,22 @@ import {
 import { ModalContent } from "./style";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ContactData, contactSchema } from "./schema";
+import { EditData } from "./schema";
 import { useContacts } from "../../../hooks/useAuth";
+import { emailSchema } from "../ModalCreate/schema";
 
 interface iModalEdit {
   contentEdition: string;
 }
 export const ModalEdit = ({ contentEdition }: iModalEdit) => {
-  const { handleCloseModal, createContact, handleOpenModal } = useContacts();
+  const { handleCloseModal, edit, handleOpenModal, currentItem } =
+    useContacts();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ContactData>({
-    resolver: zodResolver(contactSchema),
+  } = useForm<EditData>({
+    resolver: zodResolver(emailSchema),
   });
 
   let title;
@@ -62,7 +64,7 @@ export const ModalEdit = ({ contentEdition }: iModalEdit) => {
           <h2>{title}</h2>
           <IoIosClose onClick={() => handleCloseModal()} />
         </header>
-        <form onSubmit={handleSubmit(createContact)}>
+        <form onSubmit={handleSubmit((data) => edit(data, currentItem))}>
           {firstDiv}
           <div className="button-div">
             <MediumButtonBrand type="submit">Editar</MediumButtonBrand>

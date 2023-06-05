@@ -4,6 +4,7 @@ import { Dashboard } from "../pages/Dashboard";
 import { ProtectedRoutes } from "./ProtectedRoutes";
 import { Register } from "../pages/Register/index ";
 import { ContactsProvider } from "../providers/ContactsProvider";
+import { SearchValueProvider } from "../providers/SearchValueContext";
 
 export const MainRoutes = () => {
   return (
@@ -15,7 +16,9 @@ export const MainRoutes = () => {
           path="/dashboard"
           element={
             <ContactsProvider>
-              <Dashboard />
+              <SearchValueProvider>
+                <Dashboard />
+              </SearchValueProvider>
             </ContactsProvider>
           }
         />

@@ -21,16 +21,26 @@ export const ContactCardStyled = styled.li`
     align-items: center;
     .card_content--content {
       display: flex;
+      justify-content: space-between;
+      width: 80%;
       gap: 30px;
+
       > div {
         display: flex;
         flex-direction: column;
         gap: 8px;
+        max-width: 150px;
+        overflow: hidden;
       }
       h2 {
         font-size: 14px;
         font-weight: 600;
       }
+      /* @media (max-width: 1068px) {
+        > div {
+          width: 100%;
+        }
+      } */
     }
     .aside_content-card {
       display: flex;

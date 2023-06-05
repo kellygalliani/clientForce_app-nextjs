@@ -28,31 +28,25 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
 
   const signIn = async (data: LoginData) => {
     try {
-      /* toast.info("Login está sendo feito..."); */
       const response = await api.post("/login", data);
       const { token } = response.data;
 
       api.defaults.headers.common.authorization = `Bearer ${token}`;
       localStorage.setItem("clientForce:token", token);
 
-      /* toast.success("Login realizado com sucesso!"); */
       navigate("dashboard");
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao realizar login.");
     }
   };
 
   const signUp = async (data: RegisterData) => {
     try {
-      /* toast.info("Registrando seu cadastro..."); */
       const response = await api.post("/users", data);
 
-      /* toast.success("Registro realizado com sucesso!"); */
       navigate("");
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao realizar registro.");
     }
   };
 
