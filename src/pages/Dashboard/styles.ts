@@ -11,6 +11,7 @@ export const MainStyled = styled.main`
   padding-top: 150px;
   padding-bottom: 38px;
   z-index: 0;
+  position: relative;
 
   .button_session {
     width: 100%;
@@ -19,5 +20,15 @@ export const MainStyled = styled.main`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+  }
+  > a {
+    color: var(--color-gray-500);
+  }
+  .arrow-up {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    font-size: 50px;
+    cursor: pointer;
   }
 `;

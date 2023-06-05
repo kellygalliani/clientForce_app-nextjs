@@ -8,6 +8,7 @@ import { MdAccountCircle, MdEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { RiContactsFill } from "react-icons/ri";
 
 export const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,7 +34,10 @@ export const Register = () => {
         <div>
           <div>
             <p>Register in</p>
-            <img src={brand} alt="" />
+            <div className="logo">
+              <RiContactsFill />
+              <p>ClientForce</p>
+            </div>
           </div>
           <div>
             <p>Já possui conta?</p>
@@ -70,6 +74,20 @@ export const Register = () => {
 
           <FormInputDiv>
             <input
+              type="text"
+              id="phone"
+              {...register("phone")}
+              placeholder="(xx) 9xxxx-xxxx"
+            />
+            <MdEmail />
+            <label htmlFor="phone">Telefone</label>
+          </FormInputDiv>
+          {errors.phone && (
+            <p className="errorMessage">{errors.phone.message}</p>
+          )}
+
+          <FormInputDiv>
+            <input
               type={showPassword ? "text" : "password"}
               id="password"
               {...register("password")}
@@ -80,20 +98,6 @@ export const Register = () => {
           </FormInputDiv>
           {errors.password && (
             <p className="errorMessage">{errors.password.message}</p>
-          )}
-
-          <FormInputDiv>
-            <input
-              type={showPassword ? "text" : "password"}
-              id="confirm-password"
-              {...register("confirmPassword")}
-              placeholder="Digite novamente sua senha"
-            />
-            <FaKey />
-            <label htmlFor="email">Confirme a Senha</label>
-          </FormInputDiv>
-          {errors.confirmPassword && (
-            <p className="errorMessage">{errors.confirmPassword.message}</p>
           )}
 
           <FormButtonStyled type="submit">Registrar</FormButtonStyled>

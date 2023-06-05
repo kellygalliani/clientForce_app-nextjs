@@ -6,6 +6,23 @@ export const ContactsSession = () => {
     <>
       <ContactsMainStyled>
         <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
       </ContactsMainStyled>
     </>
   );

@@ -42,8 +42,13 @@ export const MainStyled = styled.main`
       div:nth-child(1) {
         display: flex;
         flex-direction: column;
-        img {
-          max-width: 14rem;
+        gap: 10px;
+        .logo {
+          font-size: 22px;
+          font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
+            sans-serif;
+          display: flex;
+          flex-direction: row;
         }
       }
       div:nth-child(2) {

@@ -9,6 +9,7 @@ import { FaKey } from "react-icons/fa";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { RiContactsFill } from "react-icons/ri";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,6 +22,7 @@ export const Login = () => {
   });
 
   const { signIn } = useAuth();
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -36,7 +38,10 @@ export const Login = () => {
       <div>
         <div>
           <p>Welcome to</p>
-          <img src={brand} alt="" />
+          <div className="logo">
+            <RiContactsFill />
+            <p>ClientForce</p>
+          </div>
         </div>
 
         <form action="" onSubmit={handleSubmit(signIn)}>
@@ -49,7 +54,6 @@ export const Login = () => {
               placeholder="Digite seu e-mail"
             />
             <MdEmail className="formIcon" />
-            <label htmlFor="email">Email</label>
           </FormInputDiv>
           {errors.email && (
             <p className="errorMessage">{errors.email.message}</p>
@@ -63,7 +67,7 @@ export const Login = () => {
               placeholder="Digite sua senha"
             />
             <FaKey className="formIcon" />
-            <label htmlFor="password">Password</label>
+
             {showPassword ? (
               <EyeIcon onClick={handleTogglePassword}>
                 <BsFillEyeSlashFill className="eye-icon" />

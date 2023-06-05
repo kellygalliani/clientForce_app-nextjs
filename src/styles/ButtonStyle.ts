@@ -19,13 +19,26 @@ export const MediumButtonBrand = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 15px;
+  padding: 10px 15px 10px 15px;
   width: 100%;
   max-width: 100px;
   color: var(--color-gray-100);
   font-size: 12px;
   border-radius: 18px;
   border: none;
+`;
+export const MediumButtonSecondary = styled.button`
+  background-color: none;
+  border: 1px solid var(--color-brand-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px 10px 15px;
+  width: 100%;
+  max-width: 100px;
+  color: var(--color-gray-600);
+  font-size: 12px;
+  border-radius: 18px;
 `;
 
 export const SmallButtonBrand = styled.button`

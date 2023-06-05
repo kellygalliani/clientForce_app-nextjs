@@ -14,6 +14,8 @@ export default createGlobalStyle`
     --color-gray-200: #F6F6F6;
     --color-gray-100: #fff;
 
+    --BackgroundModal: rgba(18, 18, 20, 0.5);
+
     font-size: 60%; 
   }
 

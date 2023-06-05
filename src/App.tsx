@@ -1,12 +1,23 @@
-import { useState } from "react";
 import { MainRoutes } from "./routes";
 import GlobalStyle from "./styles/GlobalStyle.ts";
 import { AuthProvider } from "./providers/AuthProvider.tsx";
+import { ToastContainer } from "react-toastify";
 
 export function App() {
   return (
     <>
-      <GlobalStyle />
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <AuthProvider>
         <MainRoutes />
       </AuthProvider>

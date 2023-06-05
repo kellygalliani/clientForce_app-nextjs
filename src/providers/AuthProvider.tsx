@@ -1,9 +1,10 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { LoginData } from "../pages/Login/schema";
-import { AuthContextValues, iAuthProviderProps } from "./interfaces";
+import { AuthContextValues, User, iAuthProviderProps } from "./interfaces";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { RegisterData } from "../pages/Register/schema";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext<AuthContextValues>(
   {} as AuthContextValues
@@ -12,6 +13,7 @@ export const AuthContext = createContext<AuthContextValues>(
 export const AuthProvider = ({ children }: iAuthProviderProps) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("clientForce:token");
@@ -26,31 +28,44 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
 
   const signIn = async (data: LoginData) => {
     try {
+      /* toast.info("Login está sendo feito..."); */
       const response = await api.post("/login", data);
-      console.log(response);
       const { token } = response.data;
 
-      api.defaults.headers.common.authorization /* injetar o token em todas as requisições */ = `Bearer ${token}`;
+      api.defaults.headers.common.authorization = `Bearer ${token}`;
       localStorage.setItem("clientForce:token", token);
 
+      /* toast.success("Login realizado com sucesso!"); */
       navigate("dashboard");
     } catch (error) {
       console.error(error);
-    }
-  };
-  const signUp = async (data: RegisterData) => {
-    console.log(data);
-    try {
-      const response = await api.post("/users", data);
-      console.log(response);
-      navigate("login");
-    } catch (error) {
-      console.error(error);
+      toast.error("Erro ao realizar login.");
     }
   };
 
+  const signUp = async (data: RegisterData) => {
+    try {
+      /* toast.info("Registrando seu cadastro..."); */
+      const response = await api.post("/users", data);
+
+      /* toast.success("Registro realizado com sucesso!"); */
+      navigate("");
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao realizar registro.");
+    }
+  };
+
+  const signOut = () => {
+    localStorage.removeItem("clientForce:token");
+    delete api.defaults.headers.common.authorization;
+    navigate("");
+  };
+
   return (
-    <AuthContext.Provider value={{ signIn, loading, signUp }}>
+    <AuthContext.Provider
+      value={{ signIn, loading, signUp, signOut, user, setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

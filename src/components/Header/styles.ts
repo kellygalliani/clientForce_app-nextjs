@@ -93,7 +93,8 @@ export const MenuDropDown = styled.div`
 
   a:hover {
     text-decoration: underline;
-    background-color: #ddd;
+    background-color: var(--color-brand-1);
     transform: scale(1.05);
+    color: #f0f0f0;
   }
 `;

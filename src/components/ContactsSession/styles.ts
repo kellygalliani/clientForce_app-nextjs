@@ -5,8 +5,11 @@ export const ContactsMainStyled = styled.div`
   max-width: 1080px;
   background-color: var(--color-gray-100);
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
+  gap: 30px;
   padding: 15px;
+  padding-top: 28px;
   align-items: center;
 
   box-shadow: -3px -1px 20px rgba(0, 0, 0, 0.09);

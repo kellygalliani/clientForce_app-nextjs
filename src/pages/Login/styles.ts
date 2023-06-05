@@ -37,8 +37,13 @@ export const MainStyled = styled.main`
     div:nth-child(1) {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 1.6rem;
-      img {
-        max-width: 14rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .logo {
+        font-size: 22px;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        display: flex;
       }
     }
 
@@ -95,16 +100,16 @@ export const FormInputDiv = styled.div`
   height: 6rem;
   border-radius: 0.8rem;
 
-  label {
+  /* label {
     position: absolute;
     top: 0.8em;
     left: 6rem;
     font-size: 1.2rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-  }
+  } */
   input {
     padding-left: 2.3rem;
-    padding-top: 1.5rem;
+
     background: #ececec;
     border-radius: 0.8rem;
     border: none;

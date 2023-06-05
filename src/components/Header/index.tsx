@@ -6,13 +6,17 @@ import {
   UserInforStyled,
 } from "./styles";
 import { RiContactsFill } from "react-icons/ri";
-import Avatar from "../../assets/tasks.png";
+import Avatar from "../../assets/user-avatar.jpg";
+import { useAuth } from "../../hooks/useAuth";
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const avatarRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLParagraphElement>(null);
+  const { user } = useAuth();
+
+  const { signOut } = useAuth();
 
   const handleMenuDropDown = () => {
     setMenuOpen(!menuOpen);
@@ -49,15 +53,17 @@ export const Header = () => {
             </div>
             <UserInforStyled>
               <p ref={nameRef} onClick={handleMenuDropDown}>
-                Natalya
+                {user?.name}
               </p>
               <UserAvatar ref={avatarRef} onClick={handleMenuDropDown}>
-                <img src={Avatar} alt="" />
+                <img src={user?.avatar || Avatar} alt="avatar" />
               </UserAvatar>
               {menuOpen && (
                 <MenuDropDown ref={menuRef}>
                   <a href="">Editar Perfil</a>
-                  <a href="">Logout</a>
+                  <a href="" onClick={signOut}>
+                    Logout
+                  </a>
                 </MenuDropDown>
               )}
             </UserInforStyled>
