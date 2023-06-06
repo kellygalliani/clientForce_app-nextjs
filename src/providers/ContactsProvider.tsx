@@ -2,11 +2,13 @@ import { createContext, useEffect, useState } from "react";
 import {
   Contact,
   ContactsContextValues,
+  UserDataEdit,
   iContactsProviderProps,
 } from "./interfaces";
 import { api } from "../services/api";
 import { ContactData } from "../components/Modal/ModalCreate/schema";
 import { toast } from "react-toastify";
+import { useAuth } from "../hooks/useAuth";
 export const ContactsContext = createContext<ContactsContextValues>(
   {} as ContactsContextValues
 );
@@ -17,7 +19,24 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [currentContact, setCurrentContact] = useState<Contact>();
   const [currentItem, setCurrentItem] = useState<string>("");
+  const { user, setUser } = useAuth();
 
+  const getUser = async () => {
+    const token = localStorage.getItem("clientForce:token");
+    if (!token) {
+      return;
+    }
+
+    try {
+      const response = await api.get("/users");
+      setUser(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   const getContacts = async () => {
     const token = localStorage.getItem("clientForce:token");
     if (!token) {
@@ -162,6 +181,57 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
     }
   };
 
+  const editUser = async (data: UserDataEdit, id: string) => {
+    console.log(data);
+    try {
+      let responsePromise;
+      if (data.avatar && !data.name) {
+        data.name = user?.name;
+      }
+      if (data.name || data.avatar) {
+        responsePromise = api.patch(`/users/${id}`, data);
+      } else if (data.email) {
+        responsePromise = api.patch(`/users/email/${id}`, data);
+      } else if (data.phone) {
+        responsePromise = api.patch(`/users/phone/${id}`, data);
+      }
+      if (responsePromise) {
+        toast.promise(responsePromise, {
+          pending: "Editando usuário...",
+          success: "Usuário editado com sucesso 👌",
+          error: "Não foi possível editar o usuário, tente novamente 🤯",
+        });
+        const response = await responsePromise;
+        handleOpenModal("seeProfile");
+        getUser();
+        setUser((prevUser) => {
+          if (!prevUser) return null;
+          return {
+            ...prevUser,
+            name: data.name || prevUser.name,
+            avatar: data.avatar || prevUser.avatar,
+            email: data.email
+              ? prevUser.email.map((email) =>
+                  email.id === id
+                    ? { ...email, email: data.email as string }
+                    : email
+                )
+              : prevUser.email,
+            phone: data.phone
+              ? prevUser.phone.map((phone) =>
+                  phone.id === id
+                    ? { ...phone, phone: data.phone as string }
+                    : phone
+                )
+              : prevUser.phone,
+          };
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <ContactsContext.Provider
       value={{
@@ -178,6 +248,7 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
         currentItem,
         setCurrentItem,
         deleteItem,
+        editUser,
       }}
     >
       {children}

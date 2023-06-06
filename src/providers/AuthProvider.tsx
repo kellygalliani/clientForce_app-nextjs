@@ -5,6 +5,7 @@ import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { RegisterData } from "../pages/Register/schema";
 import { toast } from "react-toastify";
+import { useContacts } from "../hooks/useAuth";
 
 export const AuthContext = createContext<AuthContextValues>(
   {} as AuthContextValues
@@ -14,7 +15,7 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-
+  const { handleOpenModal } = useContacts();
   useEffect(() => {
     const token = localStorage.getItem("clientForce:token");
     if (!token) {

@@ -7,40 +7,43 @@ import {
 import { ModalContent } from "./style";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EditData } from "./schema";
-import { useContacts } from "../../../hooks/useAuth";
-import { emailSchema } from "../ModalCreate/schema";
+import { EditData, editUserSchema } from "./schema";
+import { useAuth, useContacts } from "../../../hooks/useAuth";
 
 interface iModalEdit {
   contentEdition: string;
 }
-export const ModalEdit = ({ contentEdition }: iModalEdit) => {
-  const {
-    handleCloseModal,
-    edit,
-    handleOpenModal,
-    currentItem,
-    currentContact,
-  } = useContacts();
+export const ModalEditUserProfile = ({ contentEdition }: iModalEdit) => {
+  const { handleCloseModal, handleOpenModal, currentItem, editUser } =
+    useContacts();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<EditData>({
-    resolver: zodResolver(emailSchema),
+    resolver: zodResolver(editUserSchema),
   });
 
   let title;
   let firstDiv;
 
-  if (contentEdition === "editContact") {
-    title = "Editar Contato";
+  if (contentEdition === "editUser") {
+    title = "Editar suas Informações";
     firstDiv = (
-      <div>
-        <label htmlFor="name">Nome:</label>
-        <input type="text" id="name" {...register("name")} />
-        {errors.name && errors.name.message && <p>{errors.name.message}</p>}
-      </div>
+      <>
+        <div>
+          <label htmlFor="name">Nome:</label>
+          <input type="text" id="name" {...register("name")} />
+          {errors.name && errors.name.message && <p>{errors.name.message}</p>}
+        </div>
+        <div>
+          <label htmlFor="avatar">Avatar:</label>
+          <input type="text" id="avatar" {...register("avatar")} />
+          {errors.avatar && errors.avatar.message && (
+            <p>{errors.avatar.message}</p>
+          )}
+        </div>
+      </>
     );
   } else if (contentEdition === "editEmail") {
     title = "Editar Email";
@@ -69,12 +72,12 @@ export const ModalEdit = ({ contentEdition }: iModalEdit) => {
           <h2>{title}</h2>
           <IoIosClose onClick={() => handleCloseModal()} />
         </header>
-        <form onSubmit={handleSubmit((data) => edit(data, currentItem))}>
+        <form onSubmit={handleSubmit((data) => editUser(data, currentItem))}>
           {firstDiv}
           <div className="button-div">
             <MediumButtonBrand type="submit">Editar</MediumButtonBrand>
             <MediumButtonSecondary
-              onClick={() => handleOpenModal("seeMore")}
+              onClick={() => handleOpenModal("seeProfile")}
               type="button"
             >
               Voltar

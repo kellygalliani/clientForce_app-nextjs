@@ -50,6 +50,20 @@ export const ModalContent = styled.div`
       flex-direction: row;
       justify-content: space-around;
     }
+
+    .radioInput {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .radioInput input[type="radio"] {
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+
+      .radioInput label {
+        margin-right: 0.5rem;
+      }
+    }
   }
 
   @media (max-width: 671px) {

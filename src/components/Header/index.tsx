@@ -7,16 +7,16 @@ import {
 } from "./styles";
 import { RiContactsFill } from "react-icons/ri";
 import Avatar from "../../assets/user-avatar.jpg";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth, useContacts } from "../../hooks/useAuth";
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const avatarRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLParagraphElement>(null);
-  const { user } = useAuth();
 
-  const { signOut } = useAuth();
+  const { modalType, handleOpenModal } = useContacts();
+  const { signOut, user } = useAuth();
 
   const handleMenuDropDown = () => {
     setMenuOpen(!menuOpen);
@@ -60,7 +60,9 @@ export const Header = () => {
               </UserAvatar>
               {menuOpen && (
                 <MenuDropDown ref={menuRef}>
-                  <a href="">Editar Perfil</a>
+                  <a href="#" onClick={() => handleOpenModal("seeProfile")}>
+                    Editar Perfil
+                  </a>
                   <a href="" onClick={signOut}>
                     Logout
                   </a>

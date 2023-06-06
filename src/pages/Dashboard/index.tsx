@@ -15,18 +15,15 @@ import { ModalSeeMore } from "../../components/Modal/ModalSeeMore";
 import { ModalEdit } from "../../components/Modal/ModalEdit";
 import { ModalDelete } from "../../components/Modal/ModalDelete";
 import { ReactPDF } from "../../components/ReactPDF/ReactPDF";
+import { ModalSeeProfile } from "../../components/Modal/ModalUserProfile";
+import { ModalEditUserProfile } from "../../components/Modal/ModalEdit/editUserProfile";
+import { ModalDeleteUser } from "../../components/Modal/ModalDelete/deleteUser";
+import { ModalCreateUserContacts } from "../../components/Modal/ModalCreate/createUserInformations";
 
 export const Dashboard = () => {
   const { modalOpen, modalType, handleOpenModal } = useContacts();
   const { setUser } = useAuth();
   const [showReport, _setShowReport] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const response = await api.get("/users");
-      setUser(response.data);
-    })();
-  }, []);
 
   const handleGenerateReport = () => {
     return <ReactPDF />;
@@ -52,6 +49,7 @@ export const Dashboard = () => {
           <HiArrowCircleUp className="arrow-up" />
         </a>
       </MainStyled>
+      <ReactPDF />
 
       {modalOpen && modalType === "createContact" && (
         <ModalCreateContacts contentCreate={"createContact"} />
@@ -81,7 +79,33 @@ export const Dashboard = () => {
         <ModalDelete contentDelete={"deletePhone"} />
       )}
       {modalOpen && modalType === "seeMore" && <ModalSeeMore />}
-      {showReport && <ReactPDF />}
+      {modalOpen && modalType === "seeProfile" && <ModalSeeProfile />}
+      {modalOpen && modalType === "createUserEmail" && (
+        <ModalCreateUserContacts contentCreate={"createEmail"} />
+      )}
+      {modalOpen && modalType === "createUserPhone" && (
+        <ModalCreateUserContacts contentCreate={"createPhone"} />
+      )}
+      {modalOpen && modalType === "editProfile" && (
+        <ModalEditUserProfile contentEdition={"editUser"} />
+      )}
+      {modalOpen && modalType === "editUserEmail" && (
+        <ModalEditUserProfile contentEdition={"editEmail"} />
+      )}
+      {modalOpen && modalType === "editUserPhone" && (
+        <ModalEditUserProfile contentEdition={"editPhone"} />
+      )}
+      {modalOpen && modalType === "deleteProfile" && (
+        <ModalDeleteUser contentDelete={"deleteUser"} />
+      )}
+      {modalOpen && modalType === "deleteUserEmail" && (
+        <ModalDeleteUser contentDelete={"deleteEmail"} />
+      )}
+      {modalOpen && modalType === "deleteUserPhone" && (
+        <ModalDeleteUser contentDelete={"deletePhone"} />
+      )}
+
+      {/* {showReport && <ReactPDF />} */}
       <style>{`
         html {
           scroll-behavior: smooth;

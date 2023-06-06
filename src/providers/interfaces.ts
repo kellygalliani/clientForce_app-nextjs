@@ -33,6 +33,7 @@ export interface ContactsContextValues {
   currentItem: string;
   setCurrentItem: React.Dispatch<React.SetStateAction<string>>;
   deleteItem: (idItem: string, type: string) => void;
+  editUser: (data: UserDataEdit, userId: string) => void;
 }
 
 interface Email {
@@ -69,4 +70,19 @@ export interface Contact {
   id: string;
   name: string;
   phones: Phone[];
+}
+
+export interface UserData {
+  avatar?: string;
+  contacts?: any[];
+  email?: Email[];
+  name?: string;
+  phone?: Phone[];
+}
+
+export interface UserDataEdit {
+  avatar?: string;
+  email?: string;
+  name?: string;
+  phone?: string;
 }
