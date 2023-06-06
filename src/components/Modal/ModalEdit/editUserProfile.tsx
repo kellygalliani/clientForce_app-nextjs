@@ -14,8 +14,13 @@ interface iModalEdit {
   contentEdition: string;
 }
 export const ModalEditUserProfile = ({ contentEdition }: iModalEdit) => {
-  const { handleCloseModal, handleOpenModal, currentItem, editUser } =
-    useContacts();
+  const {
+    handleCloseModal,
+    handleOpenModal,
+    currentItem,
+    editUser,
+    emailClicked,
+  } = useContacts();
   const {
     register,
     handleSubmit,
@@ -48,11 +53,39 @@ export const ModalEditUserProfile = ({ contentEdition }: iModalEdit) => {
   } else if (contentEdition === "editEmail") {
     title = "Editar Email";
     firstDiv = (
-      <div>
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" {...register("email")} />
-        {errors.email && errors.email.message && <p>{errors.email.message}</p>}
-      </div>
+      <>
+        {" "}
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input type="email" id="email" {...register("email")} />
+          {errors.email && errors.email.message && (
+            <p>{errors.email.message}</p>
+          )}
+        </div>
+        {!emailClicked?.isPrimary && (
+          <div>
+            <label htmlFor="loginEmail">Tornar este o email de login?</label>
+            <div className="radioInput">
+              <input
+                type="radio"
+                id="loginEmailYes"
+                name="loginEmail"
+                value="yes"
+              />
+
+              <label htmlFor="loginEmailYes">Sim</label>
+              <input
+                type="radio"
+                id="loginEmailNo"
+                name="loginEmail"
+                value="no"
+                defaultChecked
+              />
+              <label htmlFor="loginEmailNo">Não</label>
+            </div>
+          </div>
+        )}
+      </>
     );
   } else if (contentEdition === "editPhone") {
     title = "Editar Telefone";

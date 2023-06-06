@@ -11,7 +11,7 @@ interface iModalEdit {
   contentDelete: string;
 }
 export const ModalDeleteUser = ({ contentDelete }: iModalEdit) => {
-  const { handleCloseModal, handleOpenModal, currentItem, deleteItem } =
+  const { handleCloseModal, handleOpenModal, currentItem, deleteUser } =
     useContacts();
 
   let title;
@@ -55,7 +55,7 @@ export const ModalDeleteUser = ({ contentDelete }: iModalEdit) => {
           {firstDiv}
           <div className="button-div">
             <MediumButtonBrand
-              onClick={() => deleteItem(currentItem, type)}
+              onClick={() => deleteUser(currentItem, type)}
               type="submit"
             >
               Deletar

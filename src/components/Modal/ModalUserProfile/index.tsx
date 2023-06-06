@@ -7,9 +7,11 @@ import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { UserAvatar } from "../../Header/styles";
 import Avatar from "../../../assets/user-avatar.jpg";
+import { useState } from "react";
 
 export const ModalSeeProfile = () => {
-  const { handleCloseModal, handleOpenModal, setCurrentItem } = useContacts();
+  const { handleCloseModal, handleOpenModal, setCurrentItem, setEmailClicked } =
+    useContacts();
 
   const { user } = useAuth();
 
@@ -85,6 +87,7 @@ export const ModalSeeProfile = () => {
                   <SmallButtonBrand
                     onClick={() => {
                       setCurrentItem(email!.id);
+                      setEmailClicked(email);
                       handleOpenModal("editUserEmail");
                     }}
                   >

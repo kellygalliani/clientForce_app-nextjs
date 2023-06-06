@@ -29,8 +29,7 @@ export const ModalCreateUserContacts = ({ contentCreate }: iModalCreate) => {
       ? emailSchema
       : phoneSchema;
   type FormData = ContactData | EmailData | PhoneData;
-  const { handleCloseModal, create, handleOpenModal, currentContact } =
-    useContacts();
+  const { handleCloseModal, addEmailPhone, handleOpenModal } = useContacts();
   const { register, handleSubmit } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
@@ -46,27 +45,6 @@ export const ModalCreateUserContacts = ({ contentCreate }: iModalCreate) => {
         <div>
           <label htmlFor="email">Email:</label>
           <input type="email" id="email" {...register("email")} required />
-        </div>
-        <div>
-          <label htmlFor="loginEmail">Tornar este o email de login?</label>
-          <div className="radioInput">
-            <input
-              type="radio"
-              id="loginEmailYes"
-              name="loginEmail"
-              value="yes"
-            />
-
-            <label htmlFor="loginEmailYes">Sim</label>
-            <input
-              type="radio"
-              id="loginEmailNo"
-              name="loginEmail"
-              value="no"
-              defaultChecked
-            />
-            <label htmlFor="loginEmailNo">Não</label>
-          </div>
         </div>
       </>
     );
@@ -90,7 +68,7 @@ export const ModalCreateUserContacts = ({ contentCreate }: iModalCreate) => {
           <h2>{title}</h2>
           <IoIosClose onClick={() => handleCloseModal()} />
         </header>
-        <form onSubmit={handleSubmit(create)}>
+        <form onSubmit={handleSubmit(addEmailPhone)}>
           {formFields}
           <div className="button-div">
             <MediumButtonBrand type="submit">Cadastrar</MediumButtonBrand>

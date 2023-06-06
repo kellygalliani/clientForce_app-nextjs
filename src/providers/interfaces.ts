@@ -34,9 +34,13 @@ export interface ContactsContextValues {
   setCurrentItem: React.Dispatch<React.SetStateAction<string>>;
   deleteItem: (idItem: string, type: string) => void;
   editUser: (data: UserDataEdit, userId: string) => void;
+  deleteUser: (idItem: string, type: string) => void;
+  addEmailPhone: (data: UserDataEdit) => void;
+  emailClicked: Email | undefined;
+  setEmailClicked: React.Dispatch<React.SetStateAction<Email | undefined>>;
 }
 
-interface Email {
+export interface Email {
   email: string;
   id: string;
   isPrimary: boolean;

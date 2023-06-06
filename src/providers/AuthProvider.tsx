@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
     setLoading(false);
   }, []);
 
-  const signIn = async (data: LoginData) => {
+  /* const signIn = async (data: LoginData) => {
     try {
       const responsePromise = api.post("/login", data);
       toast.promise(responsePromise, {
@@ -39,6 +39,32 @@ export const AuthProvider = ({ children }: iAuthProviderProps) => {
       const { token } = response.data;
       api.defaults.headers.common.authorization = `Bearer ${token}`;
       localStorage.setItem("clientForce:token", token);
+
+      navigate("dashboard");
+    } catch (error) {
+      console.error(error);
+    }
+  }; */
+  const signIn = async (data: LoginData) => {
+    try {
+      const responsePromise = api.post("/login", data);
+      toast.promise(responsePromise, {
+        pending: "Fazendo o login...",
+        success: "Login realizado com sucesso 👌",
+        error: "Não foi possível logar, verifique seus dados 🤯",
+      });
+      const response = await responsePromise;
+
+      const { token } = response.data;
+      api.defaults.headers.common.authorization = `Bearer ${token}`;
+      localStorage.setItem("clientForce:token", token);
+
+      const userResponse = await api.get("/users");
+      const user = userResponse.data;
+
+      if (!user.isActive) {
+        await api.patch(`/users/${user.id}`, { isActive: true });
+      }
 
       navigate("dashboard");
     } catch (error) {

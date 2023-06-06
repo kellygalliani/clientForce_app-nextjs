@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import {
   Contact,
   ContactsContextValues,
+  Email,
   UserDataEdit,
   iContactsProviderProps,
 } from "./interfaces";
@@ -19,7 +20,8 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [currentContact, setCurrentContact] = useState<Contact>();
   const [currentItem, setCurrentItem] = useState<string>("");
-  const { user, setUser } = useAuth();
+  const [emailClicked, setEmailClicked] = useState<Email>();
+  const { user, setUser, signOut } = useAuth();
 
   const getUser = async () => {
     const token = localStorage.getItem("clientForce:token");
@@ -182,7 +184,6 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
   };
 
   const editUser = async (data: UserDataEdit, id: string) => {
-    console.log(data);
     try {
       let responsePromise;
       if (data.avatar && !data.name) {
@@ -231,6 +232,79 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
       console.error(error);
     }
   };
+  const deleteUser = async (idItem: string, type: string) => {
+    try {
+      let responsePromise;
+      if (type === "user") {
+        responsePromise = api.patch(`/users/${idItem}`, {
+          isActive: false,
+        });
+        signOut();
+      } else if (type === "email") {
+        const email = user?.email.find((email) => email.id === idItem);
+        if (email?.isPrimary) {
+          toast.error("Não é possível deletar um email usado no login");
+          return;
+        }
+        responsePromise = api.delete(`/users/email/${idItem}`);
+      } else if (type === "phone") {
+        responsePromise = api.delete(`/users/phone/${idItem}`);
+      }
+      if (responsePromise) {
+        toast.promise(responsePromise, {
+          pending: "Deletando...",
+          success: "Deletado com sucesso 👌",
+          error: "Não foi possível deletar, tente novamente 🤯",
+        });
+        await responsePromise;
+        handleOpenModal("seeProfile");
+        getUser();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const addEmailPhone = async (data: UserDataEdit) => {
+    try {
+      let responsePromise;
+      if (data.email) {
+        responsePromise = api.patch(`/users/${user?.id}`, data);
+      } else if (data.phone) {
+        responsePromise = api.patch(`/users/${user?.id}`, data);
+      }
+      if (responsePromise) {
+        toast.promise(responsePromise, {
+          pending: "Adicionando contato...",
+          success: "Contato adicionado com sucesso 👌",
+          error: "Não foi possível adicionar o contato, tente novamente 🤯",
+        });
+        const response = await responsePromise;
+        handleOpenModal("seeProfile");
+        getUser();
+        setUser((prevUser) => {
+          if (!prevUser) return null;
+          return {
+            ...prevUser,
+            email: data.email
+              ? [
+                  ...prevUser.email,
+                  { email: data.email as string, id: "", isPrimary: false },
+                ]
+              : prevUser.email,
+            phone: data.phone
+              ? [
+                  ...prevUser.phone,
+                  { phone: data.phone as string, id: "", isPrimary: false },
+                ]
+              : prevUser.phone,
+          };
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <ContactsContext.Provider
@@ -249,6 +323,10 @@ export const ContactsProvider = ({ children }: iContactsProviderProps) => {
         setCurrentItem,
         deleteItem,
         editUser,
+        deleteUser,
+        addEmailPhone,
+        emailClicked,
+        setEmailClicked,
       }}
     >
       {children}
