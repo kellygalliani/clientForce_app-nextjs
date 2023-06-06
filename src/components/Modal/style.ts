@@ -25,6 +25,8 @@ export const ModalWrapper = styled.div<ModalWrapperProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 25px;
+  overflow: auto;
 
   background: var(--color-gray-200);
   box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
